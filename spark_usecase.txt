@@ -1,0 +1,134 @@
+Assessment 1
+-------------
+-------------
+A common problem we face at xxxx is having lots of disjointed raw sources of data, from which 
+relevant pieces of information must be aggregated and collected into hierarchical case classes, which we 
+refer to as Documents. Documents represent a hypothetical global data source, which contains all the 
+information that is needed for a use case. This exercise simplifies the realities of this, with just two initial 
+sources of high-quality data, however, reflects the types of transformations that must be performed in a 
+real-world scenario. Given customer information and account information separately, the objective is to 
+aggregate this information and match customers to their respective accounts.
+
+Customer Data:
+-------------- 
+Field Description 
+-----------------
+customerId  - A unique ID for each individual customer in the data. 
+forename    - A customer’s first name. 
+surname     - A customer’s last name.
+Account Data: 
+-------------
+Field Description
+-----------------
+customerId -  A unique ID for each individual customer in the data. 
+accountId  -  A unique ID for each individual account in the data. . 
+balance    -  An account’s current balance ($)
+
+
+Name                  Fields        Field Type   Description
+CustomerAccountOutput customerId     String
+		      forename       String
+                      surname        String
+                      accounts       Seq[AccountData]
+                      numberAccounts BigInt
+                      totalBalance   Long
+                      averageBalance Double
+
+  * +----------+-----------+----------+---------------------------------------------------------------------+--------------+------------+-----------------+
+  * |customerId|forename   |surname   |accounts                                                             |numberAccounts|totalBalance|averageBalance   |
+  * +----------+-----------+----------+---------------------------------------------------------------------+--------------+------------+-----------------+
+  * |IND0001   |Christopher|Black     |[]                                                                   |0             |0           |0.0              |
+  * |IND0002   |Madeleine  |Kerr      |[[IND0002,ACC0155,323], [IND0002,ACC0262,60]]                        |2             |383         |191.5            |
+  * |IND0003   |Sarah      |Skinner   |[[IND0003,ACC0235,631], [IND0003,ACC0486,400], [IND0003,ACC0540,53]] |3             |1084        |361.3333333333333|
+
+
+Assessment 2
+-------------
+-------------
+A problem we have at xxxx is where an address is populated with one string of text. In order to use this 
+information in the Quantexa product, this field must be "parsed". 
+The purpose of parsing is to extract information from an entry - for example, to extract a forename and 
+surname from a 'full_name' field. parsing will populate this entry. 
+You must join the given address data to the data created in Assessment 1 and subsequently use the 
+address parser provided to populate the parsed address fields in the Address.
+
+
+Address Data:
+--------------
+Field        Description 
+addressId    A unique ID for each individual address in the data. 
+customerId   A unique ID for each individual customer in the data. 
+address      The unparsed address.
+
+The parquet file generated in Assessment 1 is required to proceed.
+
+Name                 Fields      Field_Type 
+CustomerDocument   customerId     String
+                    forename      String            
+		    surname       String
+                    accounts      Seq[AccountData]
+                    address       Seq[AddressData]
+
+
+* +----------+-----------+-------+--------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+  * |customerId|forename   |surname|accounts                                                            |address                                                                                                                               |
+  * +----------+-----------+-------+--------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+  * |IND0001   |Christopher|Black  |[]                                                                  |[[ADR360,IND0001,762, East 14th Street, New York, United States of America,762, East 14th Street, New York, United States of America]]|
+  * |IND0002   |Madeleine  |Kerr   |[[IND0002,ACC0155,323], [IND0002,ACC0262,60]]                       |[[ADR139,IND0002,675, Khao San Road, Bangkok, Thailand,675, Khao San Road, Bangkok, Thailand]]                                        |
+  * |IND0003   |Sarah      |Skinner|[[IND0003,ACC0235,631], [IND0003,ACC0486,400], [IND0003,ACC0540,53]]|[[ADR318,IND0003,973, Blue Jays Way, Toronto, Canada,973, Blue Jays Way, Toronto, Canada]]                                            |
+  
+
+
+
+
+Assessment 3
+-------------
+-------------
+
+Part of the xxxx solution is to flag high risk countries as a link to these countries may be an indication of 
+tax evasion. 
+For this question you are required to populate the flag in the destination case class "ScoringModel" where 
+the customer has an address in the British Virgin Islands. 
+This flag must be then used to return the number of customers in the dataset that have a link to a British 
+Virgin Islands address
+
+Data:
+------
+The parquet file generated in Assessment 2 is the starting point of this assignment. 
+
+output:
+------
+
+The expected output which sufficiently answers the assigned questions is described in the following tables
+
+Name         Fields        Field_Type  
+ScoringModel customerId    String
+	     forename      String
+             surname       String
+             accounts      Seq[AccountData]
+             address       Seq[AddressData]
+             linkToBVI     Boolean
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
